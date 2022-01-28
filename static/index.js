@@ -188,7 +188,9 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
 
     function updatePanel() {
         if (mode === MODE_NORMAL) {
-            GameTimeLayer.innerHTML = createTimeText(_gameTimeNum);
+            if (!_gameOver) {
+                GameTimeLayer.innerHTML = createTimeText(_gameTimeNum);
+            }
         } else if (mode === MODE_ENDLESS) {
             let cps = getCPS();
             let text = (cps === 0 ? '计算中' : cps.toFixed(2));
@@ -480,7 +482,9 @@ const MODE_NORMAL = 1, MODE_ENDLESS = 2, MODE_PRACTICE = 3;
     function initSetting() {
         $("#username").val(cookie("username") ? cookie("username") : "");
         $("#message").val(cookie("message") ? cookie("message") : "");
-        $("title").text(cookie("title") ? cookie("title") : "吃掉小鹿乃");
+        if (cookie("title")) {
+            $('title').text(cookie('title'));
+        }
         let keyboard = cookie('keyboard');
         if (keyboard) {
             keyboard = keyboard.toString().toLowerCase();
